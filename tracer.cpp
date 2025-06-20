@@ -24,7 +24,7 @@ void traceRay(MyRay& ray, RTCScene scene)
         ray.time = distance / ray.speed;
 
         // ✅ 能量衰减（指数形式）
-        ray.energy *= std::exp(-K * distance);
+        ray.energy *= std::exp(-DECAY_K * distance);
     }
     else
     {
