@@ -43,7 +43,6 @@ void traceRayMultiBounce(MyRay& ray,
 
     while (ray.depth < maxDepth && ray.energy > minE)
     {
-        printf("first depth = %d\\n", ray.depth);
 
         traceRay(ray, scene);              // 复用一次交点函数
 

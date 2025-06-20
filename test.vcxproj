@@ -132,7 +132,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="geometry.cpp" />
-    <ClCompile Include="integrator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ray.cpp" />
     <ClCompile Include="result.cpp" />
@@ -141,7 +140,6 @@
   <ItemGroup>
     <ClInclude Include="config.h" />
     <ClInclude Include="geometry.h" />
-    <ClInclude Include="integrator.h" />
     <ClInclude Include="material.h" />
     <ClInclude Include="ray.h" />
     <ClInclude Include="result.h" />
