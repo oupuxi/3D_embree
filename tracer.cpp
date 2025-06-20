@@ -88,3 +88,8 @@ void traceRayMultiBounce(MyRay& ray,
         ray.depth++;
     }
 }
+
+void traceBatch(std::span<MyRay> rays, RTCScene scene, int maxDepth, float minEnergyFrac)
+{
+}
+
