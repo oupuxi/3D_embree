@@ -11,7 +11,7 @@ MyRay::MyRay() {
     energy = E0;
     speed = SPEED_C;
     time = -1.0f;
-
+    depth = 0;
     auto& r = rayhit.ray;
     r.tnear = 0.f;
     r.tfar = FLT_MAX;
