@@ -1,4 +1,4 @@
-//geometry.h 封装几何体构建过程，让你在主函数中一句话就能构建整个场景 
+//geometry.h 生成墙/房子等 Embree 几何并 attach 场景
 #pragma once
 #include <embree4/rtcore.h>
 #include"types.h"

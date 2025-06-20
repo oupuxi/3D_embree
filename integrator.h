@@ -1,3 +1,4 @@
+// integrator.h  功能与tracer重叠
 #pragma once
 #include <embree4/rtcore.h>
 #include "ray.h"      // MyRay 定义

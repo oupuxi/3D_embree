@@ -1,4 +1,4 @@
-﻿// ray.h 
+﻿// ray.h MyRay 定义 + 射线发射（半球）
 #pragma once
 #include <embree4/rtcore.h>
 #include"config.h"

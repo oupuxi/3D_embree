@@ -1,4 +1,4 @@
-// result.h  命中点统计、CSV/PLY 输出、全局数组
+// result.h  命中信息打印 / PLY & CSV 导出 / 能量累积
 #pragma once
 #include "ray.h"
 #include "types.h"

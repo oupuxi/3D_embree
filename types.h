@@ -1,4 +1,4 @@
-//types.h  Vec3f, FaceStat
+//types.h  Vec3f & 一些统计结构
 #pragma once
 // 简单的 3D 向量结构，用于表示坐标
 struct Vec3f {

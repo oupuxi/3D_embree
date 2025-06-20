@@ -1,4 +1,4 @@
-﻿// main.cpp  –  Embree 射线添加能量、速度、传播时间
+﻿// main.cpp  仿真主流程（设备 + 场景 + 射线 + 统计）
 
 #include <iostream>
 #include<cassert>
@@ -13,24 +13,8 @@ int main()
     RTCDevice device = rtcNewDevice(nullptr);
     assert(device);
     // 2. 创建场景---------------------------------------------
-    // 一块三角形场景
-	//RTCScene scene = createSimpleScene(device);
-    
-    // 一面墙场景
-    // 添加一面朝 +Z 的墙，宽 10m，高 20m，放在 Z = 5，tileSize = 1m
-   /* RTCScene scene = rtcNewScene(device);
-    addWallPlaneXY(scene, device, { 0, 1, 5 }, 2.0f, 2.0f, 2.0f);*/
     RTCScene scene = rtcNewScene(device);
-    /*addWallPlaneXYSafe(scene, device, { 0, 10, 5 }, 10.0f, 20.0f, 1.0f);
-    rtcCommitScene(scene);*/
-
     // 3. 构建房子------------------------------------------------
-    // 一个正方形
-    //RTCScene scene = rtcNewScene(device);
-    //addSquarePlane(scene, device, { 0, 1, 5 }, 2.0f);  // 中心 (0,1,5)，边长 2m，Z=5 面
-    //rtcCommitScene(scene);
-
-    // 一个box
     std::vector<Vec3f> allVertices;
     std::vector<unsigned int> allIndices;
     
@@ -51,19 +35,13 @@ int main()
     g_peakEnergy.assign(numTriangles, 0.0f);
     // 导出初始场景世界几何（不带能量）
     exportWorldCSV(allVertices, allIndices, "world_4houses_init.csv");
-
     rtcCommitScene(scene);// 场景构建完成
 
 
     // 5. 生成射线----------------------------------------------
     auto rays = generateSphereRays(100000);
     std::cout << "生成了 " << rays.size() << " 条射线，开始追踪...\n";
-    // 6. 追踪射线-----------------------------------------------
-    //for (int i = 0; i < rays.size(); ++i) {
-    //    traceRay(rays[i], scene);               // 求交
-    //    processAndPrintRay(rays[i], i);         
-    //    collectHitPoint(rays[i]);               // 收集命中信息（包含更新能量表）
-    //}
+ 
     const int   kMaxBounce = 5;     // 允许 5 次弹跳（含首射）
     const float kMinEnergyFrac = 0.01f; // 剩能低于 1% 立即终止
 
