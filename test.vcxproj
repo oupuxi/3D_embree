@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="blast_models.cpp" />
     <ClCompile Include="geometry.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ray.cpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="tracer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="blast_models.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="geometry.h" />
     <ClInclude Include="material.h" />

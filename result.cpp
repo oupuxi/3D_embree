@@ -54,7 +54,7 @@ namespace {
 }
 
 // 收集
-extern std::vector<size_t> houseOffsets;  // 在 result.h 里加 extern
+//extern std::vector<size_t> houseOffsets;  // 在 result.h 里加 extern
 
 void collectHitPoint(const MyRay& ray)
 {

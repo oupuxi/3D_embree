@@ -30,6 +30,9 @@
     <ClCompile Include="result.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="blast_models.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ray.h">
@@ -51,6 +54,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="material.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="blast_models.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
