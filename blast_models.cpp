@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 // 示例 K-B 表数据 (仅 3 条用于演示线性插值)
 //------------------------------------------------------------------------------
-struct KBEntry { float Z, Ps, td, beta; };
+struct KBEntry { float Z, Ps, td, alpha; };
 static constexpr std::array<KBEntry, 3> g_kb_table = { {
     {0.2f, 1586.0f,  0.30f, 1.90f},
     {1.0f,  185.0f,  1.70f, 1.85f},
@@ -30,11 +30,11 @@ BlastKBResult blast_kb_lookup(float Z) {
     // 边界处理
     if (Z <= g_kb_table.front().Z) {
         auto& e = g_kb_table.front();
-        return { e.Ps, e.td, e.beta };
+        return { e.Ps, e.td, e.alpha };
     }
     if (Z >= g_kb_table.back().Z) {
         auto& e = g_kb_table.back();
-        return { e.Ps, e.td, e.beta };
+        return { e.Ps, e.td, e.alpha };
     }
     // 查找所在区间
     auto it = std::upper_bound(g_kb_table.begin(), g_kb_table.end(), Z,
@@ -45,7 +45,7 @@ BlastKBResult blast_kb_lookup(float Z) {
     auto& b = g_kb_table[i1];
     float t = (Z - a.Z) / (b.Z - a.Z);
     auto lerp = [t](float A, float B) { return A + t * (B - A); };
-    return { lerp(a.Ps, b.Ps), lerp(a.td, b.td), lerp(a.beta, b.beta) };
+    return { lerp(a.Ps, b.Ps), lerp(a.td, b.td), lerp(a.alpha, b.alpha) };
 }
 
 //------------------------------------------------------------------------------
