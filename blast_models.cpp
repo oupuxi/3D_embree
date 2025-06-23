@@ -19,7 +19,7 @@ static constexpr std::array<KBEntry, 3> g_kb_table = { {
 //------------------------------------------------------------------------------
 // Hopkinson Àı≥ﬂæ‡¿Î
 //------------------------------------------------------------------------------
-inline constexpr float blast_scaled_distance(float R, float W) {
+inline  float blast_scaled_distance(float R, float W) {
     return R / std::cbrt(W);
 }
 

@@ -24,7 +24,7 @@ void traceRay(MyRay& ray, RTCScene scene)
         ray.time = distance / ray.speed;
 
         // ✅ 能量衰减（指数形式）
-        ray.energy *= std::exp(-DECAY_K * distance);
+        ray.energy *= std::exp(-0.6 * distance);
     }
     else
     {
@@ -39,7 +39,7 @@ void traceRayMultiBounce(MyRay& ray,
     int      maxDepth,
     float    minEnergyFrac)
 {
-    const float minE = E0 * minEnergyFrac;
+    const float minE = 3 * minEnergyFrac;
 
     while (ray.depth < maxDepth && ray.energy > minE)
     {

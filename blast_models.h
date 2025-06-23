@@ -15,7 +15,7 @@ struct BlastKBResult {
 /// @param R 爆炸源到目标点距离 (m)
 /// @param W TNT 当量质量 (kg)
 /// @return 归一化距离 Z (m·kg^(-1/3))
-inline constexpr float blast_scaled_distance(float R, float W);
+inline  float blast_scaled_distance(float R, float W);
 
 //------------------------------------------------------------------------------
 /// @brief 根据缩尺距离 Z 查找 K-B 表值

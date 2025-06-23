@@ -6,10 +6,10 @@
 #define M_PI 3.14159265358979323846
 #endif
 #include <random>
-
+#include "config.h"
 MyRay::MyRay() {
-    energy = E0;
-    speed = SPEED_C;
+    energy = 3;
+    speed = cfg::C0;
     time = -1.0f;
     depth = 0;
     auto& r = rayhit.ray;
@@ -63,8 +63,8 @@ std::vector<MyRay> generateSphereRays(int count)
         ray.rayhit.ray.dir_x = x_rot;
         ray.rayhit.ray.dir_y = y;
         ray.rayhit.ray.dir_z = z_rot;
-        ray.energy = E0;       // 初始化能量
-        ray.speed = SPEED_C;   // 初始化速度
+        ray.energy = 3;       // 初始化能量
+        ray.speed = cfg::C0;   // 初始化速度
         ray.time = -1.0f;      // 尚未命中
 
         rays.push_back(ray);
