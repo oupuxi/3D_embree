@@ -4,6 +4,7 @@
 #include"types.h"
 #include <vector>
 #include <utility> // for std::pair
+#include <unordered_set>
 // 提供一个创建场景的函数（返回已构建好的 scene）
 
 
@@ -21,3 +22,6 @@ std::pair<unsigned int, size_t> addHouse(
     float tileSize = 1.0f,          // 每格大小，默认 1 m
     bool withRoof = true,
     bool withFloor = false);
+
+// 声明：记录所有探测面 geomID 的集合
+extern std::unordered_set<unsigned int> g_sensorGeomIDs;

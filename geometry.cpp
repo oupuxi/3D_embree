@@ -142,3 +142,7 @@ std::pair<unsigned int, size_t> addHouse(RTCScene scene, RTCDevice device,
 
     return { geomID, nTriangles };  // ⚡ 返回几何体ID 和 三角形数量
 }
+
+// 定义：真正开辟这块 set 的内存空间
+std::unordered_set<unsigned int> g_sensorGeomIDs;
+
