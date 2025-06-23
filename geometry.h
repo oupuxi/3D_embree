@@ -1,7 +1,7 @@
 ﻿//geometry.h 生成墙/房子等 Embree 几何并 attach 场景
 #pragma once
 #include <embree4/rtcore.h>
-#include"types.h"
+#include "types.h"
 #include <vector>
 #include <utility> // for std::pair
 #include <unordered_set>

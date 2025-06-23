@@ -5,8 +5,9 @@
 #include <vector>
 #include <cmath>
 #include <iostream>
-#include"result.h"
+#include "result.h"
 #include <sstream>
+
 
 
 std::pair<unsigned int, size_t> addHouse(RTCScene scene, RTCDevice device,
