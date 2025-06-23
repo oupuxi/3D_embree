@@ -147,6 +147,7 @@
     <ClInclude Include="result.h" />
     <ClInclude Include="tracer.h" />
     <ClInclude Include="types.h" />
+    <ClInclude Include="vec_math.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

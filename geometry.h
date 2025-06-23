@@ -1,27 +1,44 @@
-//geometry.h Éú³ÉÇ½/·¿×ÓµÈ Embree ¼¸ºÎ²¢ attach ³¡¾°
+ï»¿//geometry.h ç”Ÿæˆå¢™/æˆ¿å­ç­‰ Embree å‡ ä½•å¹¶ attach åœºæ™¯
 #pragma once
 #include <embree4/rtcore.h>
 #include"types.h"
 #include <vector>
 #include <utility> // for std::pair
 #include <unordered_set>
-// Ìá¹©Ò»¸ö´´½¨³¡¾°µÄº¯Êı£¨·µ»ØÒÑ¹¹½¨ºÃµÄ scene£©
+#include "geometry.h"
+#include "vec_math.h"
+
+// æä¾›ä¸€ä¸ªåˆ›å»ºåœºæ™¯çš„å‡½æ•°ï¼ˆè¿”å›å·²æ„å»ºå¥½çš„ sceneï¼‰
 
 
-// Ò»¶°·¿×Ó
-// center£º °üÎ§ºĞÖĞĞÄ£»x±ß³¤length£¬z±ß³¤width£¬y¸ß¶Èheight
-// tileSize£ºÃ¿¸öÍßÆ¬µÄ±ß³¤£¬Ä¬ÈÏ 1 m
-// withRoof£ºÊÇ·ñÌí¼ÓÎİ¶¥£¬Ä¬ÈÏÌí¼Ó
+// ä¸€æ ‹æˆ¿å­
+// centerï¼š åŒ…å›´ç›’ä¸­å¿ƒï¼›xè¾¹é•¿lengthï¼Œzè¾¹é•¿widthï¼Œyé«˜åº¦height
+// tileSizeï¼šæ¯ä¸ªç“¦ç‰‡çš„è¾¹é•¿ï¼Œé»˜è®¤ 1 m
+// withRoofï¼šæ˜¯å¦æ·»åŠ å±‹é¡¶ï¼Œé»˜è®¤æ·»åŠ 
 std::pair<unsigned int, size_t> addHouse(
     RTCScene scene, RTCDevice device,
-    const Vec3f& center,            // ·¿×Ó°üÎ§ºĞÖĞĞÄ
-    float length, float width,      // X, Z ·½Ïò±ß³¤£¨¾ù 10 m£©
+    const Vec3f& center,            // æˆ¿å­åŒ…å›´ç›’ä¸­å¿ƒ
+    float length, float width,      // X, Z æ–¹å‘è¾¹é•¿ï¼ˆå‡ 10 mï¼‰
     float height,
     std::vector<Vec3f>& allVertices,
-    std::vector<unsigned int>& allIndices,                   // Y ¸ß¶È£¨20 m£©
-    float tileSize = 1.0f,          // Ã¿¸ñ´óĞ¡£¬Ä¬ÈÏ 1 m
+    std::vector<unsigned int>& allIndices,                   // Y é«˜åº¦ï¼ˆ20 mï¼‰
+    float tileSize = 1.0f,          // æ¯æ ¼å¤§å°ï¼Œé»˜è®¤ 1 m
     bool withRoof = true,
     bool withFloor = false);
 
-// ÉùÃ÷£º¼ÇÂ¼ËùÓĞÌ½²âÃæ geomID µÄ¼¯ºÏ
+// å£°æ˜ï¼šè®°å½•æ‰€æœ‰æ¢æµ‹é¢ geomID çš„é›†åˆ
 extern std::unordered_set<unsigned int> g_sensorGeomIDs;
+
+/**
+  åœ¨ä»»æ„ç©ºé—´æ–¹å‘ä¸Šç”Ÿæˆä¸€å—çŸ©å½¢â€œæ¢æµ‹é¢â€ï¼ˆä¸ä¼šåå°„ï¼Œåªè®°å½•äº‹ä»¶ï¼‰
+    center   : ä¸­å¿ƒç‚¹åæ ‡
+    normal   : æœå¤–æ³•çº¿ï¼ˆå»ºè®®å•ä½å‘é‡ï¼›å†…éƒ¨ä¼šè‡ªåŠ¨å½’ä¸€ï¼‰
+    width    : æ²¿ u è½´é•¿åº¦ (m)
+    height   : æ²¿ v è½´é•¿åº¦ (m)
+    tileSize : ç½‘æ ¼å°ºå¯¸ (m)ï¼›é»˜è®¤ 1.0 â†’ æ¯ 1 mÂ² æ‹†æˆ 2 ä¸‰è§’å½¢
+  è¿”å›ï¼šæ–°å»ºå‡ ä½•åœ¨ scene ä¸­çš„ geomID
+ */
+unsigned int addSensorMesh(
+    RTCScene scene, RTCDevice device,
+    const Vec3f& center, const Vec3f& normal,
+    float width, float height, float tileSize = 1.0f);

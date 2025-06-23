@@ -3,8 +3,13 @@
 // 简单的 3D 向量结构，用于表示坐标
 struct Vec3f {
     float x, y, z;
-    Vec3f() = default;
+    Vec3f() : x(0), y(0), z(0) {}
     Vec3f(float x_, float y_, float z_) : x(x_), y(y_), z(z_) {}
+
+    Vec3f operator+(const Vec3f& o) const { return Vec3f(x + o.x, y + o.y, z + o.z); }
+    Vec3f operator-(const Vec3f& o) const { return Vec3f(x - o.x, y - o.y, z - o.z); }
+    Vec3f operator*(float s) const { return Vec3f(x * s, y * s, z * s); }
+    Vec3f operator/(float s) const { return Vec3f(x / s, y / s, z / s); }
 };
 
 struct FaceStat {

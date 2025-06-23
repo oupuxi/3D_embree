@@ -146,3 +146,70 @@ std::pair<unsigned int, size_t> addHouse(RTCScene scene, RTCDevice device,
 // 定义：真正开辟这块 set 的内存空间
 std::unordered_set<unsigned int> g_sensorGeomIDs;
 
+unsigned int addSensorMesh(
+    RTCScene scene, RTCDevice device,
+    const Vec3f& center, const Vec3f& normal,
+    float width, float height, float tileSize)
+{
+    assert(scene && device);
+    assert(width > 0 && height > 0);
+    if (tileSize <= 0.0f) tileSize = 1.0f;
+
+    // 构造局部坐标系
+    Vec3f n = normalize(normal);
+    Vec3f up = (fabs(n.y) < 0.99f ? Vec3f{ 0,1,0 } : Vec3f{ 1,0,0 });
+    Vec3f u = normalize(cross(up, n));
+    Vec3f v = cross(n, u);
+
+    int tilesU = int(std::ceil(width / tileSize));
+    int tilesV = int(std::ceil(height / tileSize));
+    float du = width / tilesU;
+    float dv = height / tilesV;
+
+    // 创建局部网格数据
+    std::vector<Vec3f> verts;
+    verts.reserve((tilesU + 1) * (tilesV + 1));
+    for (int iy = 0; iy <= tilesV; iy++) {
+        for (int ix = 0; ix <= tilesU; ix++) {
+            Vec3f p = center + (ix * du - width * 0.5f) * u + (iy * dv - height * 0.5f) * v;
+            verts.push_back(p);
+        }
+    }
+
+    std::vector<unsigned int> inds;
+    inds.reserve(tilesU * tilesV * 6);
+    for (int iy = 0; iy < tilesV; iy++) {
+        for (int ix = 0; ix < tilesU; ix++) {
+            unsigned i0 = iy * (tilesU + 1) + ix;
+            unsigned i1 = i0 + 1;
+            unsigned i2 = (iy + 1) * (tilesU + 1) + ix;
+            unsigned i3 = i2 + 1;
+            // 保证法线方向一致
+            inds.insert(inds.end(), { i0, i1, i2, i1, i3, i2 });
+        }
+    }
+
+    // 创建 Embree 几何
+    RTCGeometry geom = rtcNewGeometry(device, RTC_GEOMETRY_TYPE_TRIANGLE);
+
+    // 使用 Embree 拷贝机制，避免内存生命周期问题
+    Vec3f* embreeVerts = (Vec3f*)rtcSetNewGeometryBuffer(
+        geom, RTC_BUFFER_TYPE_VERTEX, 0,
+        RTC_FORMAT_FLOAT3,
+        verts.size(), sizeof(Vec3f));
+    memcpy(embreeVerts, verts.data(), verts.size() * sizeof(Vec3f));
+
+    unsigned* embreeInds = (unsigned*)rtcSetNewGeometryBuffer(
+        geom, RTC_BUFFER_TYPE_INDEX, 0,
+        RTC_FORMAT_UINT3,
+        inds.size() / 3, 3 * sizeof(unsigned));
+    memcpy(embreeInds, inds.data(), inds.size() * sizeof(unsigned));
+
+    rtcCommitGeometry(geom);
+    unsigned geomID = rtcAttachGeometry(scene, geom);
+    rtcReleaseGeometry(geom);
+
+    // 标记为探测面
+    g_sensorGeomIDs.insert(geomID);
+    return geomID;
+}
