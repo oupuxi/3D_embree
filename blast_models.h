@@ -1,13 +1,17 @@
 #pragma once
 // blast_models.h炸药冲击波物理模型函数及数据结构声明
 #include <utility>   // std::pair
+#include "config.h"
 //------------------------------------------------------------------------------
 /// @brief Kingery–Bulmash 查表结果
 /// @note 包含峰值超压、正相位持续时间和 Friedlander 形状因子
 struct BlastKBResult {
+	float Z;     ///< 缩尺距离 (m·kg^(-1/3))
     float Ps;    ///< 峰值超压 (kPa)
     float td;    ///< 正相位持续时间 (ms)
-    float beta;  ///< Friedlander 形状因子 (无量纲)
+    float alpha;  ///< Friedlander 形状因子 (无量纲)
+    float I;     // 冲量（Pa·s）
+    float ta;    // 到达时间
 };
 
 //------------------------------------------------------------------------------
