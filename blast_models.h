@@ -9,7 +9,7 @@ struct BlastKBResult {
 	float Z;     ///< 缩尺距离 (m·kg^(-1/3))
     float Ps;    ///< 峰值超压 (kPa)
     float td;    ///< 正相位持续时间 (ms)
-    float alpha;  ///< Friedlander 形状因子 (无量纲)
+    float beta;  ///< Friedlander 形状因子 (无量纲)
     float I;     // 冲量（Pa·s）
     float ta;    // 到达时间
 };
