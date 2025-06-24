@@ -6,15 +6,7 @@
 #include <array>
 #include <algorithm>
 
-//------------------------------------------------------------------------------
-// 示例 K-B 表数据 (仅 3 条用于演示线性插值)
-//------------------------------------------------------------------------------
-struct KBEntry { float Z, Ps, td, alpha,I; };
-static constexpr std::array<KBEntry, 3> g_kb_table = { {
-    {0.2f, 1586.0f,  0.30f, 1.90f, 20.0f},
-    {1.0f,  185.0f,  1.70f, 1.85f, 12.0f},
-    {5.0f,    9.8f, 13.00f, 1.80f,  4.0f}
-} };
+
 
 //------------------------------------------------------------------------------
 // Hopkinson 缩尺距离
@@ -26,40 +18,41 @@ inline  float blast_scaled_distance(float R, float W) {
 //------------------------------------------------------------------------------
 // K-B 表线性插值查询
 //------------------------------------------------------------------------------
-BlastKBResult blast_kb_lookup(float Z, float R) {
-    BlastKBResult result;
-
-    // 1. 边界处理
-    if (Z <= g_kb_table.front().Z) {
-        auto& e = g_kb_table.front();
-        return { Z, e.Ps, e.td, e.alpha, e.I, R /cfg::C0 };
+inline BlastKBResult blast_kb_lookup(float Z){
+    const auto& tbl = g_kb_table;
+    // 边界处理
+    if (Z <= tbl.front().Z) {
+        auto& e = tbl.front();
+        return { Z, e.Ps, e.td, e.beta, e.I, e.Us, e.ta };
     }
-    if (Z >= g_kb_table.back().Z) {
-        auto& e = g_kb_table.back();
-        return { Z, e.Ps, e.td, e.alpha, e.I, R / cfg::C0 };
+    if (Z >= tbl.back().Z) {
+        auto& e = tbl.back();
+        return { Z, e.Ps, e.td, e.beta, e.I, e.Us, e.ta };
     }
 
-    // 2. 查找区间
-    auto it = std::upper_bound(g_kb_table.begin(), g_kb_table.end(), Z,
+    // 找到第一个 Z_i >= Z
+    auto it = std::upper_bound(tbl.begin(), tbl.end(), Z,
         [](float v, const KBEntry& e) { return v < e.Z; });
-    size_t i1 = std::distance(g_kb_table.begin(), it);
+    size_t i1 = it - tbl.begin();
     size_t i0 = i1 - 1;
-    auto& a = g_kb_table[i0];
-    auto& b = g_kb_table[i1];
+    auto& a = tbl[i0];
+    auto& b = tbl[i1];
 
+    // 插值
     float t = (Z - a.Z) / (b.Z - a.Z);
-    auto lerp = [t](float A, float B) { return A + t * (B - A); };
+    auto lerp = [t](float A, float B) { return A + (B - A) * t; };
 
-    // 3. 返回结构
-    result.Z = Z;
-    result.Ps = lerp(a.Ps, b.Ps);
-    result.td = lerp(a.td, b.td);
-    result.alpha = lerp(a.alpha, b.alpha);
-    result.I = lerp(a.I, b.I);
-    result.ta = R / cfg::C0;  // R 为实际传播距离，SPEED_C 为常量声速
-
-    return result;
+    return {
+        Z,
+        lerp(a.Ps,   b.Ps),   // 峰压
+        lerp(a.td,   b.td),   // 正相位持续时间
+        lerp(a.beta, b.beta), // 形状因子
+        lerp(a.I,    b.I),    // 冲量
+        lerp(a.Us,   b.Us),   // 波前速度
+        lerp(a.ta,   b.ta)    // 峰值到达时间
+    };
 }
+
 
 
 //------------------------------------------------------------------------------
