@@ -7,12 +7,12 @@ namespace cfg {
 	// ────────────────────────────────────────────────
 	// 1. 标准大气（海平面，15 °C）
 	// ────────────────────────────────────────────────
-	constexpr float AIR_R			= 287.06f;   // J / (kg·K)   比气体常数
-	constexpr float AIR_T0			= 288.15f;   // K            温度
-	constexpr float AIR_GAMMA		= 1.4f;      // 比热比 γ
-	constexpr float AIR_RHO0		= 1.225f;    // kg / m³      空气密度 ρ₀
-	constexpr float AIR_P0			= 101325.f;  // Pa           大气压强 p₀
-	constexpr float C0				= 340.29f;	 // 340.29 m/s   声速
+	constexpr float AIR_R = 287.06f;   // J / (kg·K)   比气体常数
+	constexpr float AIR_T0 = 288.15f;   // K            温度
+	constexpr float AIR_GAMMA = 1.4f;      // 比热比 γ
+	constexpr float AIR_RHO0 = 1.225f;    // kg / m³      空气密度 ρ₀
+	constexpr float AIR_P0 = 101325.f;  // Pa           大气压强 p₀
+	constexpr float C0 = 340.29f;	 // 340.29 m/s   声速
 
 	// ────────────────────────────────────────────────
 	// 2. 爆源默认参数
@@ -23,7 +23,7 @@ namespace cfg {
 	// 3. 仿真控制
 	// ────────────────────────────────────────────────
 	constexpr size_t RAY_COUNT = 1'000'000; // 半球射线数
-	constexpr int    MAX_BOUNCES = 8;         // 最大反射次数
+	constexpr int    MAX_BOUNCES = 3;         // 最大反射次数
 	constexpr float  EPS = 1e-3f;     // 交点偏移
 
 	// ────────────────────────────────────────────────
