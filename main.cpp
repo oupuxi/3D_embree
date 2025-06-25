@@ -35,6 +35,23 @@ int main()
 	rtcCommitScene(scene);// 场景构建完成
 
 
+
+	addSensorMesh(scene, device, { 15,10,10 }, { 0,0,-1 }, 20.0f, 30.0f, 1.0f); // 添加一个探测面
+
+	rtcCommitScene(scene);// 场景构建完成
+
+	// 5. 生成射线----------------------------------------------
+	auto rays = generateSphereRays(100000);
+	std::cout << "生成了 " << rays.size() << " 条射线，开始追踪...\n";
+
+
+	/*
+	*
+	* // 4. 初始化每个三角形的峰值能量表------------------------------
+	size_t numTriangles = allIndices.size() / 3;
+	g_peakEnergy.assign(numTriangles, 0.0f);
+	// 导出初始场景世界几何（不带能量）
+	exportWorldCSV(allVertices, allIndices, "world_4houses_init.csv");
 	// 5. 生成射线----------------------------------------------
 	auto rays = generateSphereRays(100000);
 	std::cout << "生成了 " << rays.size() << " 条射线，开始追踪...\n";
