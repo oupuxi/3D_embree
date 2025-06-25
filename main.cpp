@@ -30,14 +30,16 @@ int main()
 
 	auto [geomID3, numTriangles3] = addHouse(scene, device, { -15, 10, -15 }, 10.0f, 10.0f, 20.0f, allVertices, allIndices, 1.0f, true, false);
 	houseOffsets.push_back((allIndices.size() / 3) - numTriangles3);
-	// 4. 初始化每个三角形的峰值能量表------------------------------
+
+	rtcCommitScene(scene);// 场景构建完成
+
+	/*
+	*
+	* // 4. 初始化每个三角形的峰值能量表------------------------------
 	size_t numTriangles = allIndices.size() / 3;
 	g_peakEnergy.assign(numTriangles, 0.0f);
 	// 导出初始场景世界几何（不带能量）
 	exportWorldCSV(allVertices, allIndices, "world_4houses_init.csv");
-	rtcCommitScene(scene);// 场景构建完成
-
-
 	// 5. 生成射线----------------------------------------------
 	auto rays = generateSphereRays(100000);
 	std::cout << "生成了 " << rays.size() << " 条射线，开始追踪...\n";
@@ -70,7 +72,7 @@ int main()
 
 		std::cout << "房子 " << geomID << " 总能量: " << sumEnergy << "\n";
 	}
-
+	*/
 
 	rtcReleaseScene(scene);
 	rtcReleaseDevice(device);
