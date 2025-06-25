@@ -17,7 +17,7 @@ int main()
 	// 3. 构建房子------------------------------------------------
 	std::vector<Vec3f> allVertices;
 	std::vector<unsigned int> allIndices;
-
+	extern std::unordered_set<unsigned int> g_sensorGeomIDs;  // 声明全局探测面集合
 	// ➔ 每建一栋房子，记录返回的三角形数量
 	auto [geomID0, numTriangles0] = addHouse(scene, device, { 15, 10,  15 }, 10.0f, 10.0f, 20.0f, allVertices, allIndices, 1.0f, true, false);
 	houseOffsets.push_back((allIndices.size() / 3) - numTriangles0);
@@ -30,11 +30,8 @@ int main()
 
 	auto [geomID3, numTriangles3] = addHouse(scene, device, { -15, 10, -15 }, 10.0f, 10.0f, 20.0f, allVertices, allIndices, 1.0f, true, false);
 	houseOffsets.push_back((allIndices.size() / 3) - numTriangles3);
-	// 4. 初始化每个三角形的峰值能量表------------------------------
-	size_t numTriangles = allIndices.size() / 3;
-	g_peakEnergy.assign(numTriangles, 0.0f);
-	// 导出初始场景世界几何（不带能量）
-	exportWorldCSV(allVertices, allIndices, "world_4houses_init.csv");
+
+	addSensorMesh(scene, device, { 15,10,10 }, { 0,0,-1 }, 20.0f, 30.0f, 1.0f);
 	rtcCommitScene(scene);// 场景构建完成
 
 
@@ -42,6 +39,13 @@ int main()
 	auto rays = generateSphereRays(100000);
 	std::cout << "生成了 " << rays.size() << " 条射线，开始追踪...\n";
 
+	/*
+	// 4. 初始化每个三角形的峰值能量表------------------------------
+	size_t numTriangles = allIndices.size() / 3;
+	g_peakEnergy.assign(numTriangles, 0.0f);
+
+	// 导出初始场景世界几何（不带能量）
+	exportWorldCSV(allVertices, allIndices, "world_4houses_init.csv");
 
 	const float kMinEnergyFrac = 0.01f; // 剩能低于 1% 立即终止
 
@@ -70,7 +74,7 @@ int main()
 
 		std::cout << "房子 " << geomID << " 总能量: " << sumEnergy << "\n";
 	}
-
+	*/
 
 	rtcReleaseScene(scene);
 	rtcReleaseDevice(device);
