@@ -31,10 +31,6 @@ int main()
 	auto [geomID3, numTriangles3] = addHouse(scene, device, { -15, 10, -15 }, 10.0f, 10.0f, 20.0f, allVertices, allIndices, 1.0f, true, false);
 	houseOffsets.push_back((allIndices.size() / 3) - numTriangles3);
 
-	addSensorMesh(scene, device, { 15,10,10 }, { 0,0,-1 }, 20.0f, 30.0f, 1.0f);
-	rtcCommitScene(scene);// 场景构建完成
-
-
 
 	addSensorMesh(scene, device, { 15,10,10 }, { 0,0,-1 }, 20.0f, 30.0f, 1.0f); // 添加一个探测面
 
