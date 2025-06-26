@@ -32,7 +32,7 @@ int main()
 	houseOffsets.push_back((allIndices.size() / 3) - numTriangles3);
 
 
-	addSensorMesh(scene, device, { 15,10,10 }, { 0,0,-1 }, 20.0f, 30.0f, 1.0f); // 添加一个探测面
+	addSensorMesh(scene, device, { 25,15,20 }, { 0,0,-1 }, 20.0f, 30.0f, 1.0f); // 添加一个探测面
 
 	rtcCommitScene(scene);// 场景构建完成
 
