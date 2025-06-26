@@ -19,7 +19,7 @@ int main()
 	std::vector<unsigned int> allIndices;
 	extern std::unordered_set<unsigned int> g_sensorGeomIDs;  // 声明全局探测面集合
 	// ➔ 每建一栋房子，记录返回的三角形数量
-	auto [geomID0, numTriangles0] = addHouse(scene, device, { 15, 10,  15 }, 10.0f, 10.0f, 20.0f, allVertices, allIndices, 1.0f, true, false);
+	auto [geomID0, numTriangles0] = addHouse(scene, device, { 5, 10,  15 }, 10.0f, 10.0f, 20.0f, allVertices, allIndices, 1.0f, true, false);
 	houseOffsets.push_back((allIndices.size() / 3) - numTriangles0);
 
 	auto [geomID1, numTriangles1] = addHouse(scene, device, { 15, 10, -15 }, 10.0f, 10.0f, 20.0f, allVertices, allIndices, 1.0f, true, false);
@@ -32,7 +32,7 @@ int main()
 	houseOffsets.push_back((allIndices.size() / 3) - numTriangles3);
 
 
-	addSensorMesh(scene, device, { 25,15,20 }, { 0,0,-1 }, 20.0f, 30.0f, 1.0f); // 添加一个探测面
+	addSensorMesh(scene, device, { 10,15,40 }, { 0,0,-1 }, 20.0f, 30.0f, 1.0f); // 添加一个探测面
 
 	rtcCommitScene(scene);// 场景构建完成
 
